@@ -22,6 +22,13 @@
         .clearfix:after {
           clear: both;
         }
+
+        .input_box {
+          width: 300px;
+          height: 20px;
+          font-size: 15px;
+
+        }
         /* end clearfix*/
 
         </style>
@@ -60,12 +67,13 @@
             <div>
               <h2> Predicted score for all classes</h2>
               <div>
-                <input style="border: none; background: transparent; font-weight:bold;" type="text" value="Combined category" class="field left" readonly>
+                <input  style="border: none; background: transparent; font-weight:bold;" type="text" value="Combined category" class="field left" readonly>
                 <input style="border: none; background: transparent; font-weight:bold;" type="text" value="Probability score" class="field left" readonly>
                 <br></br>
                  {% for mix in classes_scores %}
-                 <input type="text" value="{{mix.0}}" class="field left" readonly>
-                 <input type="text" value="{{mix.1}}" class="field left" readonly>
+                 <input class="input_box" id="das" type="text" value="{{mix.0}}" width = "this.value.length" class="field left" >
+                 <!-- <span>{{mix.0}}</span> -->
+                 <input class="input_box" type="text" value="{{mix.1}}" class="field left" readonly>
                  <br></br>
                  {% endfor %}
               </div>
