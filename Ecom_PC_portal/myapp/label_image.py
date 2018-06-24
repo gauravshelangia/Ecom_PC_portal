@@ -21,6 +21,14 @@ import argparse
 
 import numpy as np
 import tensorflow as tf
+import os
+
+input_height = 299
+input_width = 299
+input_mean = 0
+input_std = 255
+path = os.path.dirname(os.path.abspath(__file__))
+model_file = path+'/output_graph/flipkart_graph.pb'
 
 
 def load_graph(model_file):
@@ -34,6 +42,9 @@ def load_graph(model_file):
 
   return graph
 
+
+graph = load_graph(model_file)
+print("loading loading loading")
 
 def read_tensor_from_image_file(file_name,
                                 input_height=299,
@@ -77,10 +88,6 @@ def predict(path, image_url):
   model_file = \
     "tensorflow/examples/label_image/data/inception_v3_2016_08_28_frozen.pb"
   label_file = "tensorflow/examples/label_image/data/imagenet_slim_labels.txt"
-  input_height = 299
-  input_width = 299
-  input_mean = 0
-  input_std = 255
   input_layer = "input"
   output_layer = "InceptionV3/Predictions/Reshape_1"
 
@@ -115,14 +122,12 @@ def predict(path, image_url):
   # if args.output_layer:
   #   output_layer = args.output_layer
 
-  model_file = path+'/output_graph/flipkart_graph.pb'
+  
   label_file = path+'/label/flipkart_labels.txt'
   file_name = image_url
   input_layer = 'Placeholder'
   output_layer = 'final_result'
 
-
-  graph = load_graph(model_file)
   t = read_tensor_from_image_file(
       file_name,
       input_height=input_height,
