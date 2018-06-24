@@ -31,12 +31,12 @@ def list(request):
     # Render list page with the documents and the form
     # change categories to actual categories returned from predictor
     # change the color change to the predicted color value
-    classes_scores = get_prediction( path_for_prediction)
+    classes_scores,categories,color = get_prediction( path_for_prediction)
     return render(
         request,
         'list.html',
-        {'form': form, 'path':path, 'categories':["cat1","cat2","cat3"]
-        , 'color':"Red", 'classes_scores':classes_scores}
+        {'form': form, 'path':path, 'categories':categories
+        , 'color':color, 'classes_scores':classes_scores}
     )
 
 # get prediction from the trained model and return categories list, color - string,
@@ -49,7 +49,11 @@ def get_prediction(image_path = None):
     #if not image_path:
     output = label_image.predict(path, image_path)
     print("output is :{}".format(output))
-    scores=["0.5","0.3","0.2"]
-    classes=["cat11-cat12-cat13","cat21-cat22-cat23","cat31-cat32-cat33"]
+    label_file = open('flipkar_labels.txt','r')
+    labels = eval(label_file.read())
+    scores=output.values()
+    classes=output.keys()
+    categories = labels[classes[0]]
     classes_scores = zip(classes, scores)
-    return classes_scores
+    color = 'to get till now'
+    return classes_scores,categories
